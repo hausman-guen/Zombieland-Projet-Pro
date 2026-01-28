@@ -15,6 +15,13 @@ const sequelize = new Sequelize(process.env.DATABASE_URL,{
 		// Utilise le snake_case pour les champs auto-générés (createdAt -> created_at)
 		underscored: true,
 	},
+	dialect: "postgres",
+    logging: false,
+    dialectOptions: {
+    ssl: { require: true, rejectUnauthorized: false },
+    keepAlive: true,
+    },
+    pool: { max: 5, min: 0, idle: 10_000, acquire: 60_000 },
 });
 
 //On exporte notre instance de sequelize

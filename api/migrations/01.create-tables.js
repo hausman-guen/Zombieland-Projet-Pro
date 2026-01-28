@@ -4,6 +4,8 @@ import * as Models from '../models/index.js';
 // Instance de Sequelize
 import sequelize from '../models/sequelize.client.js';
 
+console.log("DB host =", new URL(process.env.DATABASE_URL).host);
+
 async function run() {
 
 	try {
