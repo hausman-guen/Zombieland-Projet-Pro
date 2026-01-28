@@ -17,7 +17,7 @@ export default async function api(endpoint, method = "GET", body = null) {
     options.body = JSON.stringify(body);
   }
 
-  const response = await fetch(`https://zombieland-projet-pro-api.onrender.com`, options);
+  const response = await fetch(`${import.meta.env.VITE_API_URL}${endpoint}`, options);
 
   if (!response.ok) {
     const text = await response.text().catch(() => "Erreur API");
