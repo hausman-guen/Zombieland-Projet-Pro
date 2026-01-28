@@ -24,7 +24,7 @@ import { xss } from 'express-xss-sanitizer';
 const app = express();
 // middleware cors
 // Accepte de partager les données avec localhost:5173
-app.use(cors({origin: "http://localhost:5173"}));
+app.use(cors({origin: "https://zombieland-projet-pro.onrender.com"}));
 app.use(express.urlencoded({ extended: true }));
 
 // Indique à express qu'on utiliser du JSON dans le body des requetes et des reponses HTTP
