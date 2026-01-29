@@ -35,7 +35,7 @@
         return;
       }
       alert("Compte créé avec succès !");
-      window.location.href = "/myaccount";
+      window.location.href = "/#/connexion";
 
       // Réinitialiser le formulaire
       first_name = last_name = mail = password = address = city = postcode = phone_number = '';
