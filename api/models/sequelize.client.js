@@ -1,21 +1,31 @@
-//On importe sequelize
-import { Sequelize } from 'sequelize';
+import { Sequelize } from "sequelize";
+import "dotenv/config";
 
-// import de dotenv pour lire le fichier .env
-import 'dotenv/config';
+if (!process.env.DATABASE_URL) {
+    throw new Error("DATABASE_URL manquante");
+}
 
-//On configure sequelize pour notre database zombieland
-const sequelize = new Sequelize(process.env.DATABASE_URL,{
-    // define configure le comportement par défaut de Sequelize
-	define: {
-		// Une convention pour que Sequelize ne mette pas les noms de table au pluriel
-		freezeTableName: true,
-		// Ajoute les colonnes createdAt et updatedAt à chaque table
-		timestamps: true,
-		// Utilise le snake_case pour les champs auto-générés (createdAt -> created_at)
-		underscored: true,
-	},
+const isProd = process.env.NODE_ENV === "production";
+
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: "postgres",
+    logging: false,
+
+    define: {
+        freezeTableName: true,
+    	timestamps: true,
+    	underscored: true,
+    },
+
+    // ✅ Render / prod : SSL requis la plupart du temps
+    dialectOptions: isProd
+    ? {
+        ssl: { rejectUnauthorized: false },
+        keepAlive: true,
+        }
+    : {},
+
+    pool: { max: 5, min: 0, idle: 10_000, acquire: 60_000 },
 });
 
-//On exporte notre instance de sequelize
 export default sequelize;
