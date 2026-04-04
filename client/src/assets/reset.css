@@ -52,3 +52,15 @@ h1, h2, h3, h4, h5, h6 {
 #root, #__next {
   isolation: isolate;
 }
+
+/* Reset de base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Forcer html et body à prendre toute la hauteur */
+html, body, #svelte {
+  height: 100%;
+}
