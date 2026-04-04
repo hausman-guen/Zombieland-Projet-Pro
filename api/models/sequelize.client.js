@@ -2,30 +2,31 @@ import { Sequelize } from "sequelize";
 import "dotenv/config";
 
 if (!process.env.DATABASE_URL) {
-    throw new Error("DATABASE_URL manquante");
+  throw new Error("DATABASE_URL manquante");
 }
 
-const isProd = process.env.NODE_ENV === "production";
+// Détecter si c'est une connexion Render (host distant)
+const isRender = process.env.DATABASE_URL.includes("render.com");
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: "postgres",
-    logging: false,
+  dialect: "postgres",
+  logging: false,
 
-    define: {
-        freezeTableName: true,
-    	timestamps: true,
-    	underscored: true,
-    },
+  define: {
+    freezeTableName: true,
+    timestamps: true,
+    underscored: true,
+  },
 
-    // ✅ Render / prod : SSL requis la plupart du temps
-    dialectOptions: isProd
+  // ⚡ SSL obligatoire pour Render
+  dialectOptions: isRender
     ? {
-        ssl: { rejectUnauthorized: false },
+        ssl: { require: true, rejectUnauthorized: false },
         keepAlive: true,
-        }
+      }
     : {},
 
-    pool: { max: 5, min: 0, idle: 10_000, acquire: 60_000 },
+  pool: { max: 5, min: 0, idle: 10_000, acquire: 60_000 },
 });
 
 export default sequelize;
