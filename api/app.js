@@ -25,7 +25,7 @@ import { xss } from 'express-xss-sanitizer';
 // Create Express app
 const app = express();
 // middleware cors
-// Accepte de partager les données avec localhost:5173
+// Accepte de partager les données avec le front-end
 app.use(cors({origin: "https://zombieland-projet-pro.onrender.com"}));
 app.use(express.urlencoded({ extended: true }));
 

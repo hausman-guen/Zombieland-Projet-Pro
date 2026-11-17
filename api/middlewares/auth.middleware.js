@@ -12,10 +12,10 @@ export function validateUser(req, res, next) {
 		last_name: Joi.string().min(3).max(30).required(),
 		mail: Joi.string().email().required(),
 		address: Joi.string().min(3).max(255).required(),
-		password: Joi.string().min(6).max(30).required(),
+		password: Joi.string().min(10).max(30).required(),
 		city: Joi.string().min(2).max(50).required(),
 		postcode: Joi.string().min(3).max(10).required(),
-		phone_number: Joi.string().min(10).max(20).required()
+		phone_number: Joi.string().min(6).max(10).required()
 	});
 
 	const validation = userSchema.validate(req.body)

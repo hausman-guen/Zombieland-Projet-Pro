@@ -6,7 +6,7 @@ if (!process.env.DATABASE_URL) {
 }
 
 // Détecter si c'est une connexion Render (host distant)
-const isRender = process.env.DATABASE_URL.includes("render.com");
+const isRender = process.env.DATABASE_URL;
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",

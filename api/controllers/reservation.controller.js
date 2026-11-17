@@ -1,5 +1,7 @@
 import { User, Ticket, Reservation } from "../models/index.js";
 import HttpError from "../utils/HttpError.js";
+// Importe la fonction qui permet d'envoyer un email de confirmation
+import { sendReservationEmail } from "../middlewares/email.middleware.js";
 
 const reservationController = {
   async getTickets(req, res) {
@@ -41,6 +43,19 @@ const reservationController = {
         reference: randomReference,
       });
 
+    try {
+      // Appelle le service avec les informations du client, de la réservation et du billet
+      await sendReservationEmail(user, reservationCreated, ticket);
+
+      // Affiche un message dans le terminal si l'email est envoyé
+      console.log("Email de confirmation envoyé avec succès");
+
+    } catch (emailError) {
+
+      // Affiche l'erreur dans le terminal si l'envoi échoue
+      console.error("Erreur lors de l'envoi de l'email :", emailError);
+    }
+
       // Envoi de la réponse complète
       res.status(201).json({
         message: "Réservation créée avec succès",
@@ -51,6 +66,7 @@ const reservationController = {
         date_reservation: reservationCreated.date_reservation,
         date_entrance: reservationCreated.date_entrance,
       });
+
     } catch (error) {
       next(error);
     }

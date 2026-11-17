@@ -19,6 +19,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "nodemailer": "^10.4.0",
     "svelte-spa-router": "^4.0.1"
   }
 }

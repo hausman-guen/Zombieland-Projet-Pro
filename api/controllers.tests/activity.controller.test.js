@@ -1,4 +1,4 @@
-import { getByCategory } from './yourControllerFile.js';
+import { getByCategory } from '../controllers/activityController.js';
 import { Activity } from '../models/Activity.js';
 import { Category } from '../models/Category.js';
 
@@ -14,7 +14,7 @@ describe('getByCategory', () => {
 
   beforeEach(() => {
     // Mock de req.params
-    req = { params: { category: 'Sports' } };
+    req = { params: { category: 'attractions' } };
 
     // Mock de res.json
     res = { json: jest.fn() };
@@ -26,8 +26,8 @@ describe('getByCategory', () => {
   it('should call Activity.findAll with the correct include', async () => {
     // Arrange : données factices retournées par findAll
     const fakeActivities = [
-      { id: 1, name: 'Football', category: { name: 'Sports' } },
-      { id: 2, name: 'Basketball', category: { name: 'Sports' } },
+      { id: 1, name: 'Zombie Escape', category: { name: 'attractions' } },
+      { id: 2, name: 'Visite du Laboratoire', category: { name: 'attractions' } },
     ];
     Activity.findAll.mockResolvedValue(fakeActivities);
 
@@ -39,7 +39,7 @@ describe('getByCategory', () => {
       include: {
         model: Category,
         as: 'category',
-        where: { name: 'Sports' },
+        where: { name: 'attractions' },
       },
     });
 
